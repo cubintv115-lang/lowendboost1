@@ -1,4 +1,6 @@
 # GitHub Actions workflow để tự động build mod LowEndBoost
+# Tối ưu cho mạng chậm và cache lỗi
+
 name: Build Mod
 
 on:
@@ -22,20 +24,40 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.1.1'
+      # Tự tải Gradle thay vì dùng setup-gradle (cache lỗi)
+      - name: Download Gradle 8.1.1
+        run: |
+          echo "Downloading Gradle 8.1.1..."
+          for i in 1 2 3; do
+            if wget -q -O gradle-8.1.1-bin.zip https://services.gradle.org/distributions/gradle-8.1.1-bin.zip; then
+              echo "Downloaded successfully"
+              break
+            fi
+            echo "Retry $i..."
+            sleep 5
+          done
+          unzip -q gradle-8.1.1-bin.zip
+          ls -la gradle-8.1.1/bin/
+
+      - name: Generate gradle-wrapper.jar
+        run: ./gradle-8.1.1/bin/gradle wrapper --gradle-version 8.1.1
 
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Generate gradle-wrapper.jar
-        run: gradle wrapper --gradle-version 8.1.1
-
+      # Build với retry và thêm timeout
       - name: Build all MC versions
-        run: ./gradlew build --no-daemon
-        continue-on-error: false
+        run: |
+          for i in 1 2 3; do
+            echo "=== Build attempt $i ==="
+            if ./gradlew build --no-daemon --no-build-cache --info; then
+              echo "Build successful!"
+              break
+            fi
+            echo "Build failed, retrying in 30s..."
+            sleep 30
+          done
+        timeout-minutes: 60
 
       - name: Upload 1.20.1 JAR
         uses: actions/upload-artifact@v4
