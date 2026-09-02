@@ -1,10 +1,5 @@
 // build.gradle (root) - Cấu hình chung cho cả multi-project
-// Plugin org.gradlex.forge-include giúp quản lý Forge multi-version
-// https://github.com/gradlex-org/forge-include
-
-plugins {
-    id 'org.gradlex.forge-include' version '1.0.0' apply false
-}
+// Plugin Forge chỉ được apply trong từng sub-project, KHÔNG ở đây.
 
 allprojects {
     group = 'com.lowendboost'
@@ -15,7 +10,6 @@ allprojects {
     }
 }
 
-// Đảm bảo Java 17 cho mọi sub-project (yêu cầu của Forge 1.17+)
 subprojects {
     apply plugin: 'java'
 
