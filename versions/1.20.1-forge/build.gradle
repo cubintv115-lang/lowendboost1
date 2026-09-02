@@ -1,0 +1,116 @@
+// build.gradle cho sub-project 1.20.1-forge
+// Phiên bản ổn định nhất, build đầu tiên để test
+
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+}
+
+// ForgeGradle plugin (chuẩn cho Forge 1.20.1)
+apply plugin: 'net.minecraftforge.gradle'
+
+// Version của mod cho 1.20.1
+version = '1.0.0+mc1.20.1'
+group = 'com.lowendboost'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    // Toolchain đảm bảo compile đúng Java 17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+minecraft {
+    // Đường dẫn mappings channel (chính thức)
+    mappings channel: 'official', version: '1.20.1'
+
+    // Đường dẫn tới MCP data (Forge MDK)
+    // Bạn cần tải MDK từ https://files.minecraftforge.net/ và copy file
+    // forge-1.20.1-47.2.0-mdk.zip vào thư mục rồi gradle sẽ tự extract.
+    // Hoặc đặt USER_HOME/.gradle/minecraft/...
+    copyIdeResources = true
+
+    runs {
+        // Client run config (cho dev)
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.enabledGameTestNamespaces', 'lowendboost'
+            property 'forge.enabledProfileTasks', ''
+            property 'forge.disableGameTest', ''
+            mods {
+                lowendboost {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+            property 'forge.enabledGameTestNamespaces', 'lowendboost'
+        }
+
+        server {
+            property 'forge.enabledGameTestNamespaces', 'lowendboost'
+        }
+    }
+}
+
+dependencies {
+    // Common module (code chung)
+    implementation project(':common')
+
+    // Minecraft + Forge 1.20.1
+    minecraft "net.minecraftforge:forge:1.20.1-47.2.0"
+}
+
+// Pack resources vào jar
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'     : 'lowendboost',
+            'Specification-Vendor'    : 'lowendboost',
+            'Specification-Version'   : '1.0.0',
+            'Implementation-Title'    : project.name,
+            'Implementation-Version'  : project.jar.archiveVersion,
+            'Implementation-Vendor'   : 'lowendboost'
+        ])
+    }
+
+    from sourceSets.main.resources
+}
+
+// Source set: main chứa version-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+            // Kèm resources từ common module
+            srcDirs += project(':common').file('src/main/resources')
+        }
+    }
+}
+
+// Làm cho jar chạy được (cho installer/launcher nhận diện)
+jar.finalizedBy('reobfJar')
+
+// Jar phụ thuộc của Forge (cần cho dev environment)
+processResources {
+    filesMatching('META-INF/mods.toml') {
+        expand 'mod_id': 'lowendboost',
+               'mod_name': 'LowEndBoost',
+               'mod_license': 'MIT',
+               'mod_version': '1.0.0',
+               'mod_authors': 'LowEndBoost Team',
+               'mod_description': 'Performance optimization mod for low-end laptops. Tăng FPS cho máy yếu.',
+               'minecraft_version': '1.20.1',
+               'loader_version_range': '[47,)'
+    }
+}

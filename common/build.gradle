@@ -1,0 +1,27 @@
+// common module - chứa code chung dùng chung cho mọi phiên bản Minecraft
+// KHÔNG phụ thuộc vào Minecraft/Forge API
+// Chỉ chứa logic: config, hardware detection, optimizer stubs, platform interface
+
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    // Chỉ dùng dependency thuần Java - không có Minecraft/Forge ở đây
+    // Implementation thật sẽ nằm trong các sub-project versions/
+}
+
+// Jar chỉ chứa compiled class, không pack resources
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': 'LowEndBoost Common',
+            'Implementation-Version': project.version
+        )
+    }
+}

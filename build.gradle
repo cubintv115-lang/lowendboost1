@@ -1,0 +1,28 @@
+// build.gradle (root) - Cấu hình chung cho cả multi-project
+// Plugin org.gradlex.forge-include giúp quản lý Forge multi-version
+// https://github.com/gradlex-org/forge-include
+
+plugins {
+    id 'org.gradlex.forge-include' version '1.0.0' apply false
+}
+
+allprojects {
+    group = 'com.lowendboost'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+// Đảm bảo Java 17 cho mọi sub-project (yêu cầu của Forge 1.17+)
+subprojects {
+    apply plugin: 'java'
+
+    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = 17
+    }
+}

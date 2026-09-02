@@ -1,0 +1,28 @@
+// settings.gradle - Khai báo các sub-project cho từng phiên bản Minecraft
+// Mod LowEndBoost hỗ trợ đa phiên bản (1.17.1 → 1.20.1)
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.parchmentmc.org' }
+    }
+}
+
+rootProject.name = 'lowendboost'
+
+// Common module chứa code chung (HardwareDetector, Config, Platform interface)
+include 'common'
+
+// Một sub-project cho mỗi phiên bản Minecraft + Forge
+include 'versions_1_17_1'
+project(':versions_1_17_1').projectDir = file('versions/1.17.1-forge')
+
+include 'versions_1_18_2'
+project(':versions_1_18_2').projectDir = file('versions/1.18.2-forge')
+
+include 'versions_1_19_2'
+project(':versions_1_19_2').projectDir = file('versions/1.19.2-forge')
+
+include 'versions_1_20_1'
+project(':versions_1_20_1').projectDir = file('versions/1.20.1-forge')

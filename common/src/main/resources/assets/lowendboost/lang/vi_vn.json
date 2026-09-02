@@ -1,0 +1,23 @@
+{
+  "modmenu.summaryTranslation.lowendboost": "Mod tối ưu hiệu năng cho laptop yếu. Tăng FPS và giảm giật lag.",
+  "modmenu.descriptionTranslation.lowendboost": "LowEndBoost tự động phát hiện phần cứng và áp dụng các cài đặt tối ưu giúp Minecraft chạy mượt hơn trên máy cấu hình yếu.",
+  "lowendboost.message.enabled": "Đã bật LowEndBoost - cấp phần cứng: %s",
+  "lowendboost.message.disabled": "Đã tắt LowEndBoost",
+  "lowendboost.message.config_reloaded": "Đã tải lại cấu hình LowEndBoost",
+  "lowendboost.config.title": "Cài đặt LowEndBoost",
+  "lowendboost.config.mode": "Chế độ (AUTO / CUSTOM / OFF)",
+  "lowendboost.config.maxFps": "FPS tối đa (0 = không giới hạn)",
+  "lowendboost.config.renderDistance": "Khoảng cách render (chunks)",
+  "lowendboost.config.simulationDistance": "Khoảng cách mô phỏng (chunks)",
+  "lowendboost.config.particleMultiplier": "Chất lượng hạt (0.0 - 1.0)",
+  "lowendboost.config.entityAnimationDistance": "Khoảng cách tắt animation (blocks)",
+  "lowendboost.config.enableChunkLazyLoad": "Bật lazy chunk loading",
+  "lowendboost.config.aggressiveMemoryManagement": "Quản lý bộ nhớ tích cực",
+  "lowendboost.config.reduceEntityAnimations": "Giảm animation entity ở xa",
+  "lowendboost.config.enableAutoAdjust": "Tự điều chỉnh khi FPS giảm",
+  "lowendboost.config.disableDistantParticles": "Tắt particle ở xa",
+  "lowendboost.tier.LOW": "YẾU (máy rất yếu)",
+  "lowendboost.tier.MEDIUM": "TRUNG BÌNH (máy tầm trung)",
+  "lowendboost.tier.HIGH": "MẠNH (máy cấu hình cao)",
+  "lowendboost.tier.UNKNOWN": "KHÔNG XÁC ĐỊNH"
+}

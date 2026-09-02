@@ -1,0 +1,23 @@
+{
+  "modmenu.summaryTranslation.lowendboost": "Performance optimization mod for low-end laptops. Boosts FPS and reduces lag.",
+  "modmenu.descriptionTranslation.lowendboost": "LowEndBoost automatically detects your hardware and applies optimal performance settings to make Minecraft run smoother on weak machines.",
+  "lowendboost.message.enabled": "LowEndBoost enabled - hardware tier: %s",
+  "lowendboost.message.disabled": "LowEndBoost disabled",
+  "lowendboost.message.config_reloaded": "LowEndBoost config reloaded",
+  "lowendboost.config.title": "LowEndBoost Settings",
+  "lowendboost.config.mode": "Mode (AUTO / CUSTOM / OFF)",
+  "lowendboost.config.maxFps": "Max FPS (0 = unlimited)",
+  "lowendboost.config.renderDistance": "Render Distance (chunks)",
+  "lowendboost.config.simulationDistance": "Simulation Distance (chunks)",
+  "lowendboost.config.particleMultiplier": "Particle Quality (0.0 - 1.0)",
+  "lowendboost.config.entityAnimationDistance": "Entity Animation Distance (blocks)",
+  "lowendboost.config.enableChunkLazyLoad": "Enable Lazy Chunk Loading",
+  "lowendboost.config.aggressiveMemoryManagement": "Aggressive Memory Management",
+  "lowendboost.config.reduceEntityAnimations": "Reduce Distant Entity Animations",
+  "lowendboost.config.enableAutoAdjust": "Auto-adjust when FPS drops",
+  "lowendboost.config.disableDistantParticles": "Disable Distant Particles",
+  "lowendboost.tier.LOW": "LOW (very weak hardware)",
+  "lowendboost.tier.MEDIUM": "MEDIUM (mid-range hardware)",
+  "lowendboost.tier.HIGH": "HIGH (strong hardware)",
+  "lowendboost.tier.UNKNOWN": "UNKNOWN"
+}

@@ -1,0 +1,86 @@
+// build.gradle cho sub-project 1.19.2-forge
+// Forge 43.x cho Minecraft 1.19.2
+
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+
+version = '1.0.0+mc1.19.2'
+group = 'com.lowendboost'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+minecraft {
+    mappings channel: 'official', version: '1.19.2'
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.enabledGameTestNamespaces', 'lowendboost'
+            mods {
+                lowendboost {
+                    source sourceSets.main
+                }
+            }
+        }
+        client { property 'forge.enabledGameTestNamespaces', 'lowendboost' }
+        server { property 'forge.enabledGameTestNamespaces', 'lowendboost' }
+    }
+}
+
+dependencies {
+    implementation project(':common')
+    minecraft "net.minecraftforge:forge:1.19.2-43.4.0"
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'     : 'lowendboost',
+            'Specification-Vendor'    : 'lowendboost',
+            'Specification-Version'   : '1.0.0',
+            'Implementation-Title'    : project.name,
+            'Implementation-Version'  : project.jar.archiveVersion,
+            'Implementation-Vendor'   : 'lowendboost'
+        ])
+    }
+    from sourceSets.main.resources
+}
+
+sourceSets {
+    main {
+        java { srcDirs = ['src/main/java'] }
+        resources {
+            srcDirs = ['src/main/resources']
+            srcDirs += project(':common').file('src/main/resources')
+        }
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+processResources {
+    filesMatching('META-INF/mods.toml') {
+        expand 'mod_id': 'lowendboost',
+               'mod_name': 'LowEndBoost',
+               'mod_license': 'MIT',
+               'mod_version': '1.0.0',
+               'mod_authors': 'LowEndBoost Team',
+               'mod_description': 'Performance optimization mod for low-end laptops. Tăng FPS cho máy yếu.',
+               'minecraft_version': '1.19.2',
+               'loader_version_range': '[43,)'
+    }
+}
